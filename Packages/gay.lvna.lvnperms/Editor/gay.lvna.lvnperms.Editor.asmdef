@@ -1,18 +1,31 @@
 {
-  "name": "gay.lvna.lvnperms.Editor",
-  "references": [
-    "VRC.SDK3",
-    "VRC.SDK3.Editor",
-    "VRC.SDKBase",
-    "VRC.SDKBase.Editor",
-    "gay.lvna.lvnperms"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "autoReferenced": true,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "defineConstraints": [],
-  "optionalUnityReferences": []
+    "name": "gay.lvna.lvnperms.Editor",
+    "rootNamespace": "",
+    "references": [
+        "VRC.Udon",
+        "VRC.Udon.Editor",
+        "VRC.SDK3",
+        "VRC.SDK3.Editor",
+        "VRC.SDKBase",
+        "VRC.SDKBase.Editor",
+        "UdonSharp.Runtime",
+        "UdonSharp.Editor",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "gay.lvna.lvnperms"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "VRCSDKBase.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UDONSHARP"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,15 +1,22 @@
 {
-  "name": "gay.lvna.lvnperms",
-  "references": [
-    "VRC.SDK3",
-    "VRC.SDKBase"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "autoReferenced": true,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "defineConstraints": [],
-  "optionalUnityReferences": []
+    "name": "gay.lvna.lvnperms",
+    "rootNamespace": "",
+    "references": [
+        "VRC.Udon",
+        "UdonSharp.Runtime",
+        "Unity.TextMeshPro",
+        "VRC.Udon.Serialization.OdinSerializer",
+        "gay.lvna.common"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UDONSHARP"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

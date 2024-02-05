@@ -1,11 +1,12 @@
 {
   "name": "gay.lvna.lvnperms",
-  "displayName": "lvnPerms",
+  "displayName": "Luna - lvnPerms",
   "version": "0.0.1",
-  "description": "Describe this Package",
+  "description": "Luna's Permissions Manager",
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.worlds": "3.5.0"
+    "com.vrchat.worlds": "3.5.0",
+    "gay.lvna.common": "0.0.1"
   },
   "author": {
     "name": "Luna",
