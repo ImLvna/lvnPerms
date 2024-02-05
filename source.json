@@ -1,6 +1,10 @@
 {
 	"name": "Luna's VPM'",
-	"author": "Luna",
+	"author": {
+		"name": "Luna",
+		"email": "imlvnaa@gmail.com",
+		"url": "https://lvna.gay"
+	},
 	"url": "https://ImLvna.github.io/vpm/index.json",
 	"id": "gay.lvna.vpm"
 }
