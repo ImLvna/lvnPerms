@@ -1,1 +1,0 @@
-# gay.lvna.common by luna
