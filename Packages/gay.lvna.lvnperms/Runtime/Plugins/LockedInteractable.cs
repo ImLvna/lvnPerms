@@ -68,6 +68,10 @@ namespace gay.lvna.lvnperms.plugins
 
         public override void Interact()
         {
+            if (!CanInteract())
+            {
+                return;
+            }
             _Interact();
         }
 
