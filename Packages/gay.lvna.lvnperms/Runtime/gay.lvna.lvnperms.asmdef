@@ -6,7 +6,7 @@
         "UdonSharp.Runtime",
         "Unity.TextMeshPro",
         "VRC.Udon.Serialization.OdinSerializer",
-        "gay.lvna.common"
+        "gay.lvna.common.udon"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

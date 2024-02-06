@@ -1,19 +1,19 @@
 {
-  "name": "gay.lvna.lvnperms",
-  "displayName": "Luna - lvnPerms",
-  "version": "0.0.1",
-  "description": "Luna's Permissions Manager",
-  "gitDependencies": {},
-  "vpmDependencies": {
-    "com.vrchat.worlds": "3.5.0",
-    "gay.lvna.common": "0.0.1"
-  },
-  "author": {
-    "name": "Luna",
-    "email": "imlvnaa@gmail.com",
-    "url": "https://lvna.gay"
-  },
-  "legacyFolders": {},
-  "legacyFiles": {},
-  "localPath": "D:\\vrcprojects\\lvnPerms\\Packages\\gay.lvna.lvnperms"
+	"name": "gay.lvna.lvnperms",
+	"displayName": "Luna - lvnPerms",
+	"version": "0.0.2",
+	"description": "Luna's Permissions Manager",
+	"gitDependencies": {},
+	"vpmDependencies": {
+		"com.vrchat.worlds": "3.5.0",
+		"gay.lvna.common": "0.0.2"
+	},
+	"author": {
+		"name": "Luna",
+		"email": "imlvnaa@gmail.com",
+		"url": "https://lvna.gay"
+	},
+	"legacyFolders": {},
+	"legacyFiles": {},
+	"localPath": "D:\\vrcprojects\\lvnPerms\\Packages\\gay.lvna.lvnperms"
 }
