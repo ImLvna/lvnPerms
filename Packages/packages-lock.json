@@ -222,7 +222,7 @@
       }
     },
     "gay.lvna.common": {
-      "version": "file:D:/vrcprojects/lvnCommon/Packages/gay.lvna.common",
+      "version": "file:../../lvnCommon/Packages/gay.lvna.common",
       "depth": 0,
       "source": "local",
       "dependencies": {}
