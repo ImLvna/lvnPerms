@@ -138,6 +138,7 @@ namespace gay.lvna.lvnperms.core
 
         public void RegisterPlugin(Plugin plugin)
         {
+            Log("Registering plugin " + plugin);
             plugins = plugins.Add(plugin);
 
             CallPluginMethod(plugin, "lvn_Start");

@@ -86,6 +86,11 @@ namespace gay.lvna.lvnperms.core
                     permissions = permissions.ConCat(role.permissions);
                 }
 
+                if (permissions.Contains(manager.GetPermissionById("*")))
+                {
+                    return manager.permissions;
+                }
+
                 return permissions;
             }
         }

@@ -11,7 +11,6 @@ namespace gay.lvna.lvnperms.plugins.ManagementPanel
 {
     public class ManagementPanel : Plugin
     {
-
         [HideInInspector]
         public PlayerContainer playerContainer;
 

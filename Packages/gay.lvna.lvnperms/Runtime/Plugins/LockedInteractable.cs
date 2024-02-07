@@ -11,8 +11,6 @@ namespace gay.lvna.lvnperms.plugins
 {
     public abstract class LockedInteractable : Plugin
     {
-
-
         public PermissionContainer[] permissions;
         public RoleContainer[] roles;
 
@@ -51,7 +49,7 @@ namespace gay.lvna.lvnperms.plugins
 
             foreach (PermissionContainer permission in permissions)
             {
-                if (playerContainer.permissions.Contains(permission))
+                if (playerContainer.HasPermission(permission))
                 {
                     hasPermission = true;
                     break;

@@ -11,8 +11,6 @@ namespace gay.lvna.lvnperms.plugins
 {
     public class Whitelist : Plugin
     {
-
-
         public PermissionContainer[] permissions;
         public RoleContainer[] roles;
 
@@ -49,7 +47,6 @@ namespace gay.lvna.lvnperms.plugins
 
         void UpdateObjects()
         {
-            manager.Log("UpdateObjects");
             PlayerContainer playerContainer = manager.GetPlayerContainer(Networking.LocalPlayer);
             if (playerContainer == null)
             {
@@ -70,17 +67,21 @@ namespace gay.lvna.lvnperms.plugins
             {
                 if (playerContainer.HasPermission(permission))
                 {
+                    Debug.Log("Has permission: " + permission.permissionId);
                     hasPermission = true;
                     break;
                 }
             }
 
+            Debug.Log("Has permission: " + hasPermission);
             foreach (GameObject obj in showObjects)
             {
+                Debug.Log("Show object: " + obj.name);
                 obj.SetActive(hasPermission);
             }
             foreach (GameObject obj in hideObjects)
             {
+                Debug.Log("Hide object: " + obj.name);
                 obj.SetActive(!hasPermission);
             }
         }
