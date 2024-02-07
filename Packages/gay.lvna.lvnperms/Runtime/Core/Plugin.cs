@@ -10,14 +10,14 @@ namespace gay.lvna.lvnperms.core
     {
         public Manager manager;
 
-        public abstract void _lvn_Start();
+        public abstract void lvn_Start();
 
-        public virtual void _lvn_logsUpdate()
+        public virtual void lvn_LogsUpdate()
         {
 
         }
 
-        public virtual void _lvn_permissionsUpdate()
+        public virtual void lvn_PermissionsUpdate()
         {
 
         }

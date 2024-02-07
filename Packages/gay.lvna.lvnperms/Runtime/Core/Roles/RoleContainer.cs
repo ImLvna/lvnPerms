@@ -16,9 +16,11 @@ namespace gay.lvna.lvnperms.core
         public string roleId;
         public int rolePriority;
 
+        public Color32 color = new Color32(0, 0, 0, 255);
+
         public string[] hardcodedMembers;
 
-        [SerializeField, UdonSynced]
+        [SerializeField, UdonSynced, HideInInspector]
         private string[] members;
 
         public bool isDefault;
@@ -55,7 +57,7 @@ namespace gay.lvna.lvnperms.core
 
         public void AddPlayer(VRCPlayerApi player)
         {
-            if (!manager.CanTakeOwnership(Networking.LocalPlayer))
+            if (!Networking.IsOwner(gameObject) && !manager.CanTakeOwnership(Networking.LocalPlayer))
             {
                 return;
             }

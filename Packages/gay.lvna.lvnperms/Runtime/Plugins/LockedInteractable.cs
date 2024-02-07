@@ -22,7 +22,7 @@ namespace gay.lvna.lvnperms.plugins
             manager.RegisterPlugin(this);
         }
 
-        public override void _lvn_Start()
+        public override void lvn_Start()
         {
         }
 

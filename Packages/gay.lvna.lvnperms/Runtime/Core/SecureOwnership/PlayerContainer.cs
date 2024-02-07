@@ -111,6 +111,23 @@ namespace gay.lvna.lvnperms.core
             return player == requestedOwner;
         }
 
+        public RoleContainer GetTopRole()
+        {
+            if (roles.Length == 0)
+            {
+                return null;
+            }
+            RoleContainer topRole = roles[0];
+            foreach (RoleContainer role in roles)
+            {
+                if (topRole.rolePriority < role.rolePriority)
+                {
+                    topRole = role;
+                }
+            }
+            return topRole;
+        }
+
         public void SetRole(PlayerContainer playerContainer, RoleContainer role, bool give)
         {
             if (!manager.CanTakeOwnership(Networking.LocalPlayer))

@@ -22,6 +22,8 @@ namespace gay.lvna.lvnperms.plugins
         public void Start()
         {
 
+            manager.RegisterPlugin(this);
+
             foreach (GameObject obj in showObjects)
             {
                 obj.SetActive(false);
@@ -31,16 +33,16 @@ namespace gay.lvna.lvnperms.plugins
                 obj.SetActive(true);
             }
 
-            manager.RegisterPlugin(this);
+
         }
 
-        public override void _lvn_Start()
+        public override void lvn_Start()
         {
 
             UpdateObjects();
         }
 
-        public override void _lvn_permissionsUpdate()
+        public override void lvn_PermissionsUpdate()
         {
             UpdateObjects();
         }
@@ -66,10 +68,7 @@ namespace gay.lvna.lvnperms.plugins
             }
             foreach (PermissionContainer permission in permissions)
             {
-                Debug.Log("bvaswdas");
-                Debug.Log(permission.permissionId);
-                Debug.Log(playerContainer.permissions);
-                if (playerContainer.permissions.Contains(permission))
+                if (playerContainer.HasPermission(permission))
                 {
                     hasPermission = true;
                     break;

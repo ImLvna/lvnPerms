@@ -116,6 +116,7 @@ namespace gay.lvna.lvnperms.core
         {
             foreach (Plugin plugin in plugins)
             {
+                Debug.Log(plugin);
                 CallPluginMethod(plugin, method);
             }
         }
@@ -123,7 +124,7 @@ namespace gay.lvna.lvnperms.core
         public void NetUpdatePermissions()
         {
             Log("Updating Permissions");
-            CallAllPluginsMethod("_lvn_permissionsUpdate");
+            CallAllPluginsMethod("lvn_PermissionsUpdate");
         }
 
         public void UpdatePermissions()
@@ -139,7 +140,7 @@ namespace gay.lvna.lvnperms.core
         {
             plugins = plugins.Add(plugin);
 
-            CallPluginMethod(plugin, "_lvn_Start");
+            CallPluginMethod(plugin, "lvn_Start");
         }
 
         public string[] logs = new string[0];
@@ -149,7 +150,7 @@ namespace gay.lvna.lvnperms.core
             Debug.Log(message);
             logs = logs.Add(message);
 
-            CallAllPluginsMethod("_lvn_logsUpdate");
+            CallAllPluginsMethod("lvn_LogsUpdate");
         }
 
 
@@ -167,9 +168,11 @@ namespace gay.lvna.lvnperms.core
         {
             InitPermissions();
 
-
             hasInitalized = true;
-            CallAllPluginsMethod("_lvn_Start");
+
+
+
+            CallAllPluginsMethod("lvn_Start");
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -185,6 +188,13 @@ namespace gay.lvna.lvnperms.core
                 Log("Instantiating player container for " + player.displayName);
                 playerContainer = Instantiate(transform.Find("#InitalizationPrefabs").Find("#PlayerContainer").gameObject).GetComponent<PlayerContainer>();
                 playerContainer.transform.SetParent(transform.Find("#PlayerContainers"));
+                foreach (RoleContainer role in roles)
+                {
+                    if (role.isDefault)
+                    {
+                        role.AddPlayer(player);
+                    }
+                }
                 playerContainer._lvn_init(player);
             }
             Log("Player " + player.displayName + " has joined. Roles:");
