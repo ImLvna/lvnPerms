@@ -8,47 +8,9 @@ using VRC.Udon;
 
 namespace gay.lvna.lvnperms.core
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class PlayerContainer : UdonSharpBehaviour
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    public class PlayerContainer : ManagedOwnership
     {
-        public Manager manager;
-
-        private bool hasInitalized = false;
-
-        [UdonSynced]
-        public string target = "null";
-        [UdonSynced]
-        public string targetRole = "null";
-        [UdonSynced]
-        public bool targetGiveTake = false;
-
-        public override void OnDeserialization()
-        {
-            if (!Networking.IsOwner(manager.gameObject))
-            {
-                return;
-            }
-
-            if (target != "null" && targetRole != "null")
-            {
-                RoleContainer role = manager.GetRoleById(targetRole);
-                if (role != null)
-                {
-                    if (targetGiveTake)
-                    {
-                        manager.Log("Give " + target + " " + role.roleName);
-                        role.AddPlayer(player);
-                    }
-                    else
-                    {
-                        manager.Log("Take " + target + " " + role.roleName);
-                        role.RemovePlayer(player);
-                    }
-                }
-
-            }
-        }
-
         private VRCPlayerApi _player;
         public VRCPlayerApi player
         {
@@ -67,7 +29,6 @@ namespace gay.lvna.lvnperms.core
                 {
                     if (role.HasPlayer(player))
                     {
-                        ArrayExtensions.Add(roles, role);
                         roles = roles.Add(role);
                     }
                 }
@@ -107,14 +68,11 @@ namespace gay.lvna.lvnperms.core
             return false;
         }
 
-        public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
+        public bool HasRole(RoleContainer role)
         {
-            if (!hasInitalized)
-            {
-                return true;
-            }
-            return player == requestedOwner;
+            return roles.Contains(role);
         }
+
 
         public RoleContainer GetTopRole()
         {
@@ -133,25 +91,32 @@ namespace gay.lvna.lvnperms.core
             return topRole;
         }
 
-        public void SetRole(PlayerContainer playerContainer, RoleContainer role, bool give)
+        public void AddRole(RoleContainer role)
         {
             if (!manager.CanTakeOwnership(Networking.LocalPlayer))
             {
                 return;
             }
-            target = playerContainer.player.displayName;
-            targetRole = role.roleId;
-            targetGiveTake = give;
-            RequestSerialization();
+
+            Networking.SetOwner(Networking.LocalPlayer, role.gameObject);
+            role.AddPlayer(player);
+        }
+
+        public void RemoveRole(RoleContainer role)
+        {
+            if (!manager.CanTakeOwnership(Networking.LocalPlayer))
+            {
+                return;
+            }
+
+            Networking.SetOwner(Networking.LocalPlayer, role.gameObject);
+            role.RemovePlayer(player);
         }
 
         public void _lvn_init(VRCPlayerApi player)
         {
-            Networking.SetOwner(Networking.LocalPlayer, gameObject);
             name = player.displayName;
             _player = player;
-            hasInitalized = true;
-            Networking.SetOwner(player, gameObject);
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)

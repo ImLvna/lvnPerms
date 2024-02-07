@@ -9,10 +9,9 @@ using UnityEngine.PlayerLoop;
 
 namespace gay.lvna.lvnperms.core
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class Manager : UdonSharpBehaviour
     {
-
-        private bool hasInitalized = false;
 
         private Plugin[] plugins = new Plugin[0];
 
@@ -121,29 +120,25 @@ namespace gay.lvna.lvnperms.core
             }
         }
 
-        public void NetUpdatePermissions()
-        {
-            Log("Updating Permissions");
-            CallAllPluginsMethod("lvn_PermissionsUpdate");
-        }
-
         public void UpdatePermissions()
         {
-            if (!Networking.IsOwner(gameObject))
+            Log("Updating Permissions");
+            foreach (Plugin plugin in plugins)
             {
-                return;
+                plugin.lvn_PermissionsUpdate();
             }
-            SendCustomNetworkEvent(NetworkEventTarget.All, "NetUpdatePermissions");
         }
+
 
         public void RegisterPlugin(Plugin plugin)
         {
             Log("Registering plugin " + plugin);
             plugins = plugins.Add(plugin);
 
-            CallPluginMethod(plugin, "lvn_Start");
+            plugin.lvn_Start();
         }
 
+        [HideInInspector]
         public string[] logs = new string[0];
 
         public void Log(string message)
@@ -151,7 +146,10 @@ namespace gay.lvna.lvnperms.core
             Debug.Log(message);
             logs = logs.Add(message);
 
-            CallAllPluginsMethod("lvn_LogsUpdate");
+            foreach (Plugin plugin in plugins)
+            {
+                plugin.lvn_LogsUpdate();
+            }
         }
 
 
@@ -168,12 +166,6 @@ namespace gay.lvna.lvnperms.core
         void Start()
         {
             InitPermissions();
-
-            hasInitalized = true;
-
-
-
-            CallAllPluginsMethod("lvn_Start");
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -189,13 +181,6 @@ namespace gay.lvna.lvnperms.core
                 Log("Instantiating player container for " + player.displayName);
                 playerContainer = Instantiate(transform.Find("#InitalizationPrefabs").Find("#PlayerContainer").gameObject).GetComponent<PlayerContainer>();
                 playerContainer.transform.SetParent(transform.Find("#PlayerContainers"));
-                foreach (RoleContainer role in roles)
-                {
-                    if (role.isDefault)
-                    {
-                        role.AddPlayer(player);
-                    }
-                }
                 playerContainer._lvn_init(player);
             }
             Log("Player " + player.displayName + " has joined. Roles:");
@@ -213,7 +198,7 @@ namespace gay.lvna.lvnperms.core
             {
                 return true;
             }
-            if (GetPlayerContainer(player).HasPermission(GetPermissionById("gay.lvna.lvnperms.TakeOwnership")))
+            if (GetPlayerContainer() != null && GetPlayerContainer(player).HasPermission(GetPermissionById("gay.lvna.lvnperms.TakeOwnership")))
             {
                 return true;
             }

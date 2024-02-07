@@ -4,6 +4,7 @@ using gay.lvna.lvnperms.core;
 using TMPro;
 using UdonSharp;
 using UnityEngine;
+using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
 
@@ -14,10 +15,14 @@ namespace gay.lvna.lvnperms.plugins.ManagementPanel
         [HideInInspector]
         public PlayerContainer playerContainer;
 
+        public RoleContainer[] roles;
+
 
         private GameObject playerListContent;
         private GameObject playerListTemplate;
         private GameObject actionsHeader;
+        private GameObject roleListContent;
+        private GameObject roleListTemplate;
         void Start()
         {
 
@@ -27,6 +32,11 @@ namespace gay.lvna.lvnperms.plugins.ManagementPanel
             playerListTemplate.SetActive(false);
 
             actionsHeader = transform.Find("Actions").Find("Header").gameObject;
+
+            roleListContent = transform.Find("Actions").Find("Roles").Find("Viewport").Find("Content").gameObject;
+
+            roleListTemplate = transform.Find("Actions").Find("Roles").Find("Template").gameObject;
+            roleListTemplate.SetActive(false);
 
 
             manager.RegisterPlugin(this);
@@ -39,13 +49,28 @@ namespace gay.lvna.lvnperms.plugins.ManagementPanel
 
         public override void lvn_PermissionsUpdate()
         {
-            Debug.Log("lvnperms");
             Render();
+        }
+
+        public void SetRole(RoleContainer role)
+        {
+            if (playerContainer == null)
+            {
+                manager.Log("ManagementPanel: PlayerContainer is null");
+                return;
+            }
+            if (playerContainer.HasRole(role))
+            {
+                playerContainer.RemoveRole(role);
+            }
+            else
+            {
+                playerContainer.AddRole(role);
+            }
         }
 
         public void Render()
         {
-            Debug.Log("render");
             if (playerContainer == null)
             {
                 playerContainer = manager.GetPlayerContainer();
@@ -65,12 +90,74 @@ namespace gay.lvna.lvnperms.plugins.ManagementPanel
             TextMeshProUGUI tmpro = actionsHeader.GetComponentInChildren<TextMeshProUGUI>();
             tmpro.text = playerContainer.player.displayName;
             tmpro.color = playerContainer.GetTopRole().color;
+
+            Transform[] children = roleListContent.GetComponentsInChildren<Transform>();
+            for (int i = 1; i < children.Length; i++)
+            {
+                Destroy(children[i].gameObject);
+            }
+
+            float step = roleListTemplate.GetComponent<RectTransform>().rect.height + 15;
+            float top = -15;
+
+            bool first = true;
+
+            foreach (RoleContainer role in roles)
+            {
+                if (playerContainer != null && !role.CanModifyRole(playerContainer.player))
+                {
+                    // Hide roles that the player can't modify
+                    continue;
+                }
+                GameObject roleListEntry = Instantiate(roleListTemplate);
+                roleListEntry.name = role.name;
+
+                ManagementPanelRoleShim boxRoleListEntry = roleListEntry.GetComponent<ManagementPanelRoleShim>();
+                boxRoleListEntry.role = role;
+                boxRoleListEntry.panel = this;
+
+                roleListEntry.transform.SetParent(roleListContent.transform, false);
+                roleListEntry.SetActive(true);
+                TextMeshProUGUI tmproRole = roleListEntry.GetComponentInChildren<TextMeshProUGUI>();
+                tmproRole.text = role.name;
+
+
+                if (playerContainer != null)
+                {
+                    if (playerContainer.HasRole(role))
+                    {
+                        roleListEntry.GetComponent<Image>().color = role.color;
+                    }
+                    else
+                    {
+                        tmproRole.color = role.color;
+                    }
+                }
+
+                RectTransform trans = roleListEntry.GetComponent<RectTransform>();
+                if (first)
+                {
+                    trans.anchoredPosition = new Vector2(15, top);
+                }
+                else
+                {
+                    // Every other role is on the right side of the list
+                    trans.anchoredPosition = new Vector2(-30, top);
+                    trans.anchorMin = new Vector2(1, 1);
+                    trans.anchorMax = new Vector2(1, 1);
+                    trans.pivot = new Vector2(1, 1);
+
+                    top -= step;
+                }
+                first = !first;
+            }
+
+            roleListContent.GetComponent<RectTransform>().sizeDelta = new Vector2(0, -top);
         }
 
 
         void RenderPlayerList()
         {
-            manager.Log("RenderPlayerList");
             Transform[] children = playerListContent.GetComponentsInChildren<Transform>();
             for (int i = 1; i < children.Length; i++)
             {

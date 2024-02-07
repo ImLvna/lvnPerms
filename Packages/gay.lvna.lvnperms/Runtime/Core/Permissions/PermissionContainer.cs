@@ -9,7 +9,7 @@ namespace gay.lvna.lvnperms.core
     public class PermissionContainer : UdonSharpBehaviour
     {
 
-        private Manager manager;
+        // private Manager manager;
 
         public string permissionName;
         public string permissionId;

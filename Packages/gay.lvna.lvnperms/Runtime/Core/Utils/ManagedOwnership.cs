@@ -9,8 +9,6 @@ public class ManagedOwnership : UdonSharpBehaviour
 {
     public Manager manager;
 
-    private VRCPlayerApi _oldOwner;
-
     public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
     {
         if (manager == null)
@@ -19,16 +17,5 @@ public class ManagedOwnership : UdonSharpBehaviour
         }
 
         return manager.CanTakeOwnership(requestedOwner);
-    }
-
-    public void SetOwner(VRCPlayerApi player)
-    {
-        _oldOwner = Networking.GetOwner(gameObject);
-        Networking.SetOwner(player, gameObject);
-    }
-
-    public void RevertOwner()
-    {
-        Networking.SetOwner(_oldOwner, gameObject);
     }
 }
