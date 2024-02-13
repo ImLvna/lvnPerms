@@ -6,7 +6,8 @@
   "gitDependencies": {},
   "vpmDependencies": {
     "com.vrchat.worlds": "3.5.0",
-    "gay.lvna.common": "0.0.2"
+    "gay.lvna.common.udon": "0.0.3",
+    "gay.lvna.ui": "0.0.4"
   },
   "author": {
     "name": "Luna",
