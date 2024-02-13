@@ -221,12 +221,6 @@
         "com.unity.inputsystem": "1.2.0"
       }
     },
-    "gay.lvna.common": {
-      "version": "file:../../lvnCommon/Packages/gay.lvna.common",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {}
-    },
     "gay.lvna.common.udon": {
       "version": "file:gay.lvna.common.udon",
       "depth": 0,
